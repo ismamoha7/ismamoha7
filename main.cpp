@@ -105,6 +105,7 @@ void addStudent() {
     students.push_back(student);
 }
 
+
 void viewStudents() {
     std::cout << "\nView students by:\n1. All\n2. Group\nYour choice: ";
     int choice;
@@ -155,6 +156,5 @@ void saveToFile() {
     outFile.close();
     std::cout << "Data saved to students.csv\n";
 }
-
 
 
