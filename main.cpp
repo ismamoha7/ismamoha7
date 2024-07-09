@@ -105,6 +105,7 @@ void addStudent() {
     students.push_back(student);
 }
 
+
 void viewStudents() {
     std::cout << "\nView students by:\n1. All\n2. Group\nYour choice: ";
     int choice;
@@ -135,6 +136,9 @@ void viewStudents() {
     }
 }
 
+
+
+
 void viewActivities(const std::vector<Activity>& activities) {
     for (const auto& activity : activities) {
         std::cout << activity.name << " (Available: " << activity.maxCapacity - activity.currentCapacity << ", Male: " << activity.maleCount << ", Female: " << activity.femaleCount << ")\n";
@@ -154,6 +158,7 @@ void saveToFile() {
     outFile.close();
     std::cout << "Data saved to students.csv\n";
 }
+
 
 int main() {
     int choice;
@@ -188,4 +193,5 @@ int main() {
     } while (choice != 7);
     return 0;
 }
+
 
