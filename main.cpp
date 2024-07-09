@@ -53,3 +53,55 @@ void addStudent() {
     std::cout << "Enter BBIT group (1-3): ";
     std::cin >> student.group;
 
+    int choice;
+    do {
+        std::cout << "\nSelect activity type:\n1. Sport\n2. Club/Society\n0. Finish selection\nYour choice: ";
+        std::cin >> choice;
+        if (choice == 1) {
+            std::cout << "Available sports:\n";
+            for (size_t i = 0; i < sports.size(); ++i) {
+                std::cout << i + 1 << ". " << sports[i].name << " (Available: " << sports[i].maxCapacity - sports[i].currentCapacity << ")\n";
+            }
+            int sportChoice;
+            std::cin >> sportChoice;
+            if (sportChoice > 0 && sportChoice <= sports.size() && sports[sportChoice - 1].currentCapacity < sports[sportChoice - 1].maxCapacity) {
+                if ((sports[sportChoice - 1].maleCount + sports[sportChoice - 1].femaleCount) < (sports[sportChoice - 1].maxCapacity) &&
+                    ((student.gender == "Male" && sports[sportChoice - 1].maleCount < sports[sportChoice - 1].maxCapacity * sports[sportChoice - 1].maxGenderRatio / 100) ||
+                     (student.gender == "Female" && sports[sportChoice - 1].femaleCount < sports[sportChoice - 1].maxCapacity * sports[sportChoice - 1].maxGenderRatio / 100))) {
+                    student.activities.push_back(sports[sportChoice - 1].name);
+                    sports[sportChoice - 1].currentCapacity++;
+                    if (student.gender == "Male") sports[sportChoice - 1].maleCount++;
+                    else sports[sportChoice - 1].femaleCount++;
+                } else {
+                    std::cout << "Gender ratio limit reached for this sport.\n";
+                }
+            } else {
+                std::cout << "Invalid choice or sport is full.\n";
+            }
+        } else if (choice == 2) {
+            std::cout << "Available clubs/societies:\n";
+            for (size_t i = 0; i < clubs.size(); ++i) {
+                std::cout << i + 1 << ". " << clubs[i].name << " (Available: " << clubs[i].maxCapacity - clubs[i].currentCapacity << ")\n";
+            }
+            int clubChoice;
+            std::cin >> clubChoice;
+            if (clubChoice > 0 && clubChoice <= clubs.size() && clubs[clubChoice - 1].currentCapacity < clubs[clubChoice - 1].maxCapacity) {
+                if ((clubs[clubChoice - 1].maleCount + clubs[clubChoice - 1].femaleCount) < (clubs[clubChoice - 1].maxCapacity) &&
+                    ((student.gender == "Male" && clubs[clubChoice - 1].maleCount < clubs[clubChoice - 1].maxCapacity * clubs[clubChoice - 1].maxGenderRatio / 100) ||
+                     (student.gender == "Female" && clubs[clubChoice - 1].femaleCount < clubs[clubChoice - 1].maxCapacity * clubs[clubChoice - 1].maxGenderRatio / 100))) {
+                    student.activities.push_back(clubs[clubChoice - 1].name);
+                    clubs[clubChoice - 1].currentCapacity++;
+                    if (student.gender == "Male") clubs[clubChoice - 1].maleCount++;
+                    else clubs[clubChoice - 1].femaleCount++;
+                } else {
+                    std::cout << "Gender ratio limit reached for this club/society.\n";
+                }
+            } else {
+                std::cout << "Invalid choice or club/society is full.\n";
+            }
+        }
+    } while (choice != 0);
+
+    students.push_back(student);
+}
+
