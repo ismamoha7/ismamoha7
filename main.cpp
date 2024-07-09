@@ -105,3 +105,56 @@ void addStudent() {
     students.push_back(student);
 }
 
+
+void viewStudents() {
+    std::cout << "\nView students by:\n1. All\n2. Group\nYour choice: ";
+    int choice;
+    std::cin >> choice;
+    if (choice == 1) {
+        for (const auto& student : students) {
+            std::cout << student.firstname << " " << student.surname << " (Group " << student.group << "): ";
+            for (const auto& activity : student.activities) {
+                std::cout << activity << " ";
+            }
+            std::cout << "\n";
+        }
+    } else if (choice == 2) {
+        std::cout << "Enter group number (1-3): ";
+        int group;
+        std::cin >> group;
+        for (const auto& student : students) {
+            if (student.group == group) {
+                std::cout << student.firstname << " " << student.surname << " (Group " << student.group << "): ";
+                for (const auto& activity : student.activities) {
+                    std::cout << activity << " ";
+                }
+                std::cout << "\n";
+            }
+        }
+    } else {
+        std::cout << "Invalid choice.\n";
+    }
+}
+
+
+void viewActivities(const std::vector<Activity>& activities) {
+    for (const auto& activity : activities) {
+        std::cout << activity.name << " (Available: " << activity.maxCapacity - activity.currentCapacity << ", Male: " << activity.maleCount << ", Female: " << activity.femaleCount << ")\n";
+    }
+}
+
+void saveToFile() {
+    std::ofstream outFile("students.csv");
+    outFile << "Firstname,Surname,Gender,Age,Group,Activities\n";
+    for (const auto& student : students) {
+        outFile << student.firstname << "," << student.surname << "," << student.gender << "," << student.age << "," << student.group << ",";
+        for (const auto& activity : student.activities) {
+            outFile << activity << ";";
+        }
+        outFile << "\n";
+    }
+    outFile.close();
+    std::cout << "Data saved to students.csv\n";
+}
+
+
