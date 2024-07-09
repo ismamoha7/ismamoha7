@@ -135,3 +135,57 @@ void viewStudents() {
     }
 }
 
+void viewActivities(const std::vector<Activity>& activities) {
+    for (const auto& activity : activities) {
+        std::cout << activity.name << " (Available: " << activity.maxCapacity - activity.currentCapacity << ", Male: " << activity.maleCount << ", Female: " << activity.femaleCount << ")\n";
+    }
+}
+
+void saveToFile() {
+    std::ofstream outFile("students.csv");
+    outFile << "Firstname,Surname,Gender,Age,Group,Activities\n";
+    for (const auto& student : students) {
+        outFile << student.firstname << "," << student.surname << "," << student.gender << "," << student.age << "," << student.group << ",";
+        for (const auto& activity : student.activities) {
+            outFile << activity << ";";
+        }
+        outFile << "\n";
+    }
+    outFile.close();
+    std::cout << "Data saved to students.csv\n";
+}
+
+int main() {
+    int choice;
+    do {
+        std::cout << "\nMenu:\n1. Add Student\n2. View Students\n3. View Clubs/Societies\n4. View Sports\n5. View Grouped Students\n6. Save all Files\n7. Exit\nYour choice: ";
+        std::cin >> choice;
+        switch (choice) {
+            case 1:
+                addStudent();
+                break;
+            case 2:
+                viewStudents();
+                break;
+            case 3:
+                viewActivities(clubs);
+                break;
+            case 4:
+                viewActivities(sports);
+                break;
+            case 5:
+                viewStudents();
+                break;
+            case 6:
+                saveToFile();
+                break;
+            case 7:
+                std::cout << "Exiting...\n";
+                break;
+            default:
+                std::cout << "Invalid choice. Try again.\n";
+        }
+    } while (choice != 7);
+    return 0;
+}
+
